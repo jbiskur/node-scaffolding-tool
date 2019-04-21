@@ -1,0 +1,8 @@
+version: "3.7"
+services:
+  nodeapp:
+    build:
+      context: .
+      target: prod
+    ports:
+      - 8080:8080

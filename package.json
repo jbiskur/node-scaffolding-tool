@@ -6,7 +6,10 @@
   "scripts": {
     "start": "node --inspect=5858 -r ts-node/register ./src/index.ts",
     "dev": "nodemon",
-    "build": "tsc"
+    "build": "tsc",
+    "test": "jest",
+    "docker": "docker-compose up --build",
+    "docker:dev": "docker-compose -f docker-compose.yml -f docker/dev.yml up --build"
   },
   "nodemonConfig": {
     "ignore": [

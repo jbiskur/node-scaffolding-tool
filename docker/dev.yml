@@ -1,0 +1,11 @@
+version: "3.7"
+services:
+  nodeapp:
+    build:
+      target: build-stage
+    ports:
+      - 8080:8080
+      - 5858:5858
+    command: ["yarn", "dev", "-L"]
+    volumes:
+      - ./src:/usr/src/app/src

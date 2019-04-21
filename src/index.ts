@@ -1,5 +1,5 @@
 console.log("Hello");
 
-while (true) {
-  const a = "b";
-}
+// while (true) {
+//   const a = "b";
+// }
