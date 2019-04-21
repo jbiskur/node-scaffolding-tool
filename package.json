@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node --inspect=5858 -r ts-node/register ./src/index.ts",
+    "start": "node --inspect=0.0.0.0:5858 -r ts-node/register ./src/index.ts",
     "dev": "nodemon",
     "build": "tsc",
     "test": "jest",

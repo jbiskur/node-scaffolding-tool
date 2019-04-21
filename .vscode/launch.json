@@ -21,7 +21,7 @@
       "address": "localhost",
       "port": 5858,
       "localRoot": "${workspaceFolder}/src",
-      "remoteRoot": "Absolute path to the remote directory containing the program"
+      "remoteRoot": "/usr/src/app/src"
     },
     {
       "type": "node",
