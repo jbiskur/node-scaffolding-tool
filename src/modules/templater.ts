@@ -79,10 +79,10 @@ export class Templater {
     });
   }
 
-  public async ProcessPlugins(selected: string[]) {
+  public async ProcessPlugins(selected: string[], mappings: Record<string, string>) {
     for (let i = 0; i < selected.length; i++) {
       const pluginName = selected[i];
-      const pluginPath = path.join(this.templatePath, "plugins", pluginName);
+      const pluginPath = path.join(mappings[pluginName], pluginName);
       const pluginSettings: PluginSettings = Templater.FetchPluginSettings(pluginPath, this.projectName);
       if (pluginSettings.options) {
         const answers = await prompt(pluginSettings.options);

@@ -5,11 +5,13 @@ import { prompt, Questions } from "inquirer";
 import * as path from "path";
 import { templateSelector } from "./modules/template-selector";
 import { Templater } from "./modules/templater";
-import { pluginSelector } from "./modules/plugin-selector";
+import { pluginSelector, PluginDictionary } from "./modules/plugin-selector";
+import * as _ from "lodash";
 
 const commander = new Command();
 
 const templatesDir = path.join(__dirname, "./../templates/");
+const pluginsDir = path.join(__dirname, "./../");
 const question = templateSelector(templatesDir);
 const questions: Questions = [
   question,
@@ -33,9 +35,10 @@ commander
         project
       });
 
-      prompt(pluginSelector(tempDir)).then(async args => {
-        console.log(args);
-        // await templater.ProcessPlugins(plugins);
+      const availablePlugins = pluginSelector(tempDir, pluginsDir);
+
+      prompt(availablePlugins.question).then(async ({ plugins }) => {
+        await templater.ProcessPlugins(plugins, availablePlugins.mapping);
       });
     });
   })
