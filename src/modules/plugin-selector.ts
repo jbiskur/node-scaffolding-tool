@@ -1,7 +1,8 @@
-import { Question, ChoiceType } from "inquirer";
 import * as fs from "fs";
+import { ChoiceType, Question } from "inquirer";
 import * as path from "path";
-import { Templater, PluginSettings } from "./templater";
+
+import { PluginSettings, Templater } from "./templater";
 
 export interface PluginDictionary {
   question: Question;

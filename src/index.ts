@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 import "core-js";
+
 import { Command } from "commander";
 import { prompt, Questions } from "inquirer";
 import * as path from "path";
+
+import { pluginSelector } from "./modules/plugin-selector";
 import { templateSelector } from "./modules/template-selector";
 import { Templater } from "./modules/templater";
-import { pluginSelector } from "./modules/plugin-selector";
 
 const commander = new Command();
 

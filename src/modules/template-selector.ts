@@ -1,6 +1,7 @@
-import { Question, ChoiceType } from "inquirer";
 import * as fs from "fs";
+import { ChoiceType, Question } from "inquirer";
 import * as path from "path";
+
 import { Templater, TemplateSettings } from "./templater";
 
 export const templateSelector = (templatePath: string): Question => {
