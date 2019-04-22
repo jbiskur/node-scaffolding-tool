@@ -1,0 +1,9 @@
+version: "3.7"
+services:
+  <%= appName %>:
+    build:
+      context: .
+      target: prod
+    ports:
+    <% _.split(port,";").forEach(function(mapping) {%> - <%-mapping%>
+    <%});%>
