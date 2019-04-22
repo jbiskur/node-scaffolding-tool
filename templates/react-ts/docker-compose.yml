@@ -1,0 +1,8 @@
+version: "3.7"
+services:
+  reactapp:
+    build:
+      context: .
+      target: prod
+    ports:
+      - 8081:80
