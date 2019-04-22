@@ -5,8 +5,7 @@ import { prompt, Questions } from "inquirer";
 import * as path from "path";
 import { templateSelector } from "./modules/template-selector";
 import { Templater } from "./modules/templater";
-import { pluginSelector, PluginDictionary } from "./modules/plugin-selector";
-import * as _ from "lodash";
+import { pluginSelector } from "./modules/plugin-selector";
 
 const commander = new Command();
 

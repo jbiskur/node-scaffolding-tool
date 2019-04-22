@@ -1,7 +1,6 @@
 import { Question, ChoiceType } from "inquirer";
 import * as fs from "fs";
 import * as path from "path";
-import * as _ from "lodash";
 import { Templater, PluginSettings } from "./templater";
 
 export interface PluginDictionary {
