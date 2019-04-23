@@ -1,4 +1,5 @@
 import * as fs from "fs";
+import * as fse from "fs-extra";
 import { prompt, Question } from "inquirer";
 import * as _ from "lodash";
 import * as path from "path";
@@ -21,7 +22,7 @@ export interface PluginSettings {
   filesToProcess?: string[];
 }
 
-const templateIgnorePatterns: RegExp[] = [new RegExp(/^\\plugins/, "i"), new RegExp(/template.json/, "i")];
+const templateIgnorePatterns: RegExp[] = [new RegExp(/^(\\|\/)?plugins/, "i"), new RegExp(/template.json/, "i")];
 const pluginIngorePatterns: RegExp[] = [new RegExp(/plugin.json/, "i"), new RegExp(/package.json/, "i")];
 
 export class Templater {
@@ -68,7 +69,7 @@ export class Templater {
   }
 
   public static forceCopyFileSync(file: string, newFile: string) {
-    fs.mkdirSync(path.dirname(newFile), { recursive: true });
+    fse.ensureDirSync(path.dirname(newFile));
     fs.copyFileSync(file, newFile);
   }
 
@@ -118,8 +119,7 @@ export class Templater {
   private test(file: string, ignorePattern: RegExp[]): boolean {
     let found = false;
     for (let i = 0; i < ignorePattern.length; i++) {
-      const newExp = RegExp(ignorePattern[i], "i");
-      if (newExp.test(file)) {
+      if (ignorePattern[i].test(file)) {
         found = true;
         i = ignorePattern.length;
       }
@@ -186,7 +186,6 @@ export class Templater {
     this.files.forEach(file => {
       const relativePath = this.extractRelativeFile(file);
       let ignoreFile = this.test(relativePath, templateIgnorePatterns);
-
       if (ignoreFile) {
         this.filesToIgnore.push(file);
       }

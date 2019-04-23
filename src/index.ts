@@ -4,6 +4,7 @@ import "core-js";
 import { Command } from "commander";
 import { prompt, Questions } from "inquirer";
 import * as path from "path";
+import install from "yarn-install";
 
 import { pluginSelector } from "./modules/plugin-selector";
 import { templateSelector } from "./modules/template-selector";
@@ -23,6 +24,8 @@ const questions: Questions = [
   }
 ];
 
+console.log(install);
+
 let projectName = "";
 
 commander
@@ -40,6 +43,7 @@ commander
 
       prompt(availablePlugins.question).then(async ({ plugins }) => {
         await templater.ProcessPlugins(plugins, availablePlugins.mapping);
+        install();
       });
     });
   })

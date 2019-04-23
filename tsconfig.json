@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "paths": { "*": ["src/types/*"] },
     "sourceMap": true,
     "noImplicitAny": false,
     "module": "commonjs",
@@ -11,8 +12,9 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "baseUrl": "./",
-    "outDir": "dist"
+    "outDir": "dist",
+    "typeRoots": ["./src/types", "./node_modules/@types"]
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", ".vscode", "templates"]
+  "exclude": ["node_modules", ".vscode", "templates", "./src/types"]
 }
