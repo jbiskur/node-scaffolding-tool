@@ -1,3 +1,4 @@
 {
-  "name": "Typescript Node Application"
+  "name": "Typescript Node Application",
+  "filesToProcess": ["package.json"]
 }

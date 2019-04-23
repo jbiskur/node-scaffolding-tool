@@ -41,6 +41,7 @@ commander
 
       prompt(availablePlugins.question).then(async ({ plugins }) => {
         await templater.ProcessPlugins(plugins, availablePlugins.mapping);
+        process.chdir(`./${projectName}`);
         install();
       });
     });

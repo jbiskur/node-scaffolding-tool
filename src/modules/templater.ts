@@ -125,10 +125,20 @@ export class Templater {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private mergeConfigurations(filePath: string, additionalJSON: Record<string, any>) {
-    const orgJSON = JSON.parse(fs.readFileSync(filePath, "utf8"));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let orgJSON: Record<string, any> = null;
+    if (fs.existsSync(filePath)) {
+      orgJSON = JSON.parse(fs.readFileSync(filePath, "utf8"));
+    } else {
+      orgJSON = {
+        version: "0.2.0",
+        configurations: []
+      };
+    }
     const newFile = _.cloneDeep(orgJSON);
     newFile.configurations.push(additionalJSON.configurations);
     newFile.configurations = _.flatten(newFile.configurations);
+    fse.ensureDirSync(path.dirname(filePath));
     fs.writeFileSync(filePath, JSON.stringify(newFile, null, 2));
   }
 
@@ -176,11 +186,13 @@ export class Templater {
     const relativeFile = this.extractRelativeFile(file);
     const newFilePath = path.join(this.projectPath, relativeFile);
     let process = false;
-    for (let i = 0; i < this.templateSettings.filesToProcess.length; i++) {
-      const newExp = RegExp(this.templateSettings.filesToProcess[i], "i");
-      if (newExp.test(relativeFile)) {
-        process = true;
-        i = this.templateSettings.filesToProcess.length;
+    if (this.templateSettings.filesToProcess) {
+      for (let i = 0; i < this.templateSettings.filesToProcess.length; i++) {
+        const newExp = RegExp(this.templateSettings.filesToProcess[i], "i");
+        if (newExp.test(relativeFile)) {
+          process = true;
+          i = this.templateSettings.filesToProcess.length;
+        }
       }
     }
 

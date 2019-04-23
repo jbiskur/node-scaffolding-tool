@@ -23,7 +23,6 @@
     "image-webpack-loader": "^4.6.0",
     "node-sass": "^4.11.0",
     "prettier": "^1.17.0",
-    "react-testing-library": "^6.1.2",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "typescript": "^3.4.4",
