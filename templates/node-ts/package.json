@@ -1,0 +1,44 @@
+{
+  "name": "<%= project %>",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "node --inspect=0.0.0.0:5858 -r ts-node/register ./src/index.ts",
+    "dev": "nodemon",
+    "build": "tsc"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "**/*.test.ts",
+      "**/*.spec.ts",
+      ".git",
+      "node_modules"
+    ],
+    "watch": [
+      "src"
+    ],
+    "exec": "npm start",
+    "ext": "ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jbiskur/node-scaffolding-tool.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jbiskur/node-scaffolding-tool/issues"
+  },
+  "homepage": "https://github.com/jbiskur/node-scaffolding-tool#readme",
+  "devDependencies": {
+    "@types/lodash": "^4.14.123",
+    "@types/node": "^11.13.6",
+    "nodemon": "^1.18.11",
+    "ts-node": "^8.1.0",
+    "typescript": "^3.4.4"
+  },
+  "dependencies": {
+    "lodash": "^4.17.11"
+  }
+}

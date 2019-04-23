@@ -24,8 +24,6 @@ const questions: Questions = [
   }
 ];
 
-console.log(install);
-
 let projectName = "";
 
 commander

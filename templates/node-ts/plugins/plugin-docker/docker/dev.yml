@@ -1,11 +1,11 @@
 version: "3.7"
 services:
-  nodeapp:
+  <%= appName %>:
     build:
       target: build-stage
     ports:
-      - 8080:8080
-      - 5858:5858
+    <% _.split(devPort,";").forEach(function(mapping) {%> - <%-mapping%>
+    <%});%>
     command: ["yarn", "dev", "-L"]
     volumes:
       - ./src:/usr/src/app/src

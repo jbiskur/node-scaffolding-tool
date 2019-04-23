@@ -11,9 +11,7 @@
     "dev": "nodemon",
     "build:watch": "nodemon --exec yarn build",
     "build": "tsc",
-    "test": "jest",
-    "docker": "docker-compose up --build",
-    "docker:dev": "docker-compose -f docker-compose.yml -f docker/dev.yml up --build"
+    "test": "jest"
   },
   "nodemonConfig": {
     "ignore": [

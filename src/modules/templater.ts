@@ -91,18 +91,25 @@ export class Templater {
         const copiedFiles = this.processPluginFiles(pluginPath, answers, pluginSettings.processors);
         pluginFiles = _.difference(pluginFiles, copiedFiles);
         pluginFiles.forEach(file => {
-          if (path.basename(file) == "package.json") {
-            const pluginPackage = JSON.parse(fs.readFileSync(file, "utf8"));
-            this.processJSONFile(pluginPackage);
-          } else {
-            if (!this.test(file, pluginIngorePatterns)) {
+          switch (path.basename(file)) {
+            case "package.json":
+              this.processJSONFile(this.projectJSONPath, JSON.parse(fs.readFileSync(file, "utf8")));
+              break;
+            case "launch.json":
               const relativeFile = file.replace(pluginPath, "");
               const newFilePath = path.join(this.projectPath, relativeFile);
-              Templater.forceCopyFileSync(file, newFilePath);
+              this.mergeConfigurations(newFilePath, JSON.parse(fs.readFileSync(file, "utf8")));
+              break;
+            default:
+              if (!this.test(file, pluginIngorePatterns)) {
+                const relativeFile = file.replace(pluginPath, "");
+                const newFilePath = path.join(this.projectPath, relativeFile);
+                Templater.forceCopyFileSync(file, newFilePath);
 
-              const compiled = _.template(fs.readFileSync(newFilePath, "utf8"));
-              fs.writeFileSync(newFilePath, compiled(answers));
-            }
+                const compiled = _.template(fs.readFileSync(newFilePath, "utf8"));
+                fs.writeFileSync(newFilePath, compiled(answers));
+              }
+              break;
           }
         });
       }
@@ -110,10 +117,19 @@ export class Templater {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private processJSONFile(jsonContent: Record<string, any>) {
-    const projectPackage = JSON.parse(fs.readFileSync(this.projectJSONPath, "utf8"));
-    const newFile = _.merge(projectPackage, jsonContent);
-    fs.writeFileSync(this.projectJSONPath, JSON.stringify(newFile, null, 2));
+  private processJSONFile(filePath: string, additionalJSON: Record<string, any>) {
+    const orgJSON = JSON.parse(fs.readFileSync(filePath, "utf8"));
+    const newFile = _.merge(orgJSON, additionalJSON);
+    fs.writeFileSync(filePath, JSON.stringify(newFile, null, 2));
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private mergeConfigurations(filePath: string, additionalJSON: Record<string, any>) {
+    const orgJSON = JSON.parse(fs.readFileSync(filePath, "utf8"));
+    const newFile = _.cloneDeep(orgJSON);
+    newFile.configurations.push(additionalJSON.configurations);
+    newFile.configurations = _.flatten(newFile.configurations);
+    fs.writeFileSync(filePath, JSON.stringify(newFile, null, 2));
   }
 
   private test(file: string, ignorePattern: RegExp[]): boolean {
@@ -149,7 +165,7 @@ export class Templater {
           copiedFiles.push(filePath);
         });
 
-        this.processJSONFile(process.package);
+        this.processJSONFile(this.projectJSONPath, process.package);
       }
     }
 

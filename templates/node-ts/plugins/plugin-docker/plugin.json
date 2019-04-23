@@ -1,0 +1,41 @@
+{
+  "name": "Docker",
+  "options": [
+    {
+      "name": "appName",
+      "type": "input",
+      "message": "name of the docker container",
+      "default": "--name--"
+    },
+    {
+      "name": "port",
+      "type": "input",
+      "message": "input port mapping, seperate by ; \"8080:8080;5858:5858\"",
+      "default": "8080:8080"
+    },
+    {
+      "name": "devContainer",
+      "type": "confirm",
+      "message": "should a development setup be installed",
+      "default": true
+    },
+    {
+      "name": "devPort",
+      "type": "input",
+      "message": "additional port mapping for development",
+      "default": "5858:5858",
+      "when": "devContainer"
+    }
+  ],
+  "processors": {
+    "devContainer": {
+      "files": ["docker/dev.yml"],
+      "package": {
+        "scripts": {
+          "docker:dev": "docker-compose -f docker-compose.yml -f docker/dev.yml up --build"
+        }
+      }
+    }
+  },
+  "filesToProcess": ["package.json"]
+}
