@@ -162,7 +162,7 @@ export class Templater {
   ): string[] {
     const copiedFiles: string[] = [];
     for (let questionName in answers) {
-      if (processors[questionName]) {
+      if (processors && processors[questionName]) {
         const process: PluginProcessor = processors[questionName];
         process.files.forEach(file => {
           const filePath = path.join(pluginPath, file);
