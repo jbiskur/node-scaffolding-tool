@@ -1,0 +1,12 @@
+{
+  "name": "Express",
+  "options": [
+    {
+      "name": "port",
+      "type": "input",
+      "message": "express listen port",
+      "default": "8080"
+    }
+  ],
+  "filesToProcess": ["src/index.ts"]
+}
