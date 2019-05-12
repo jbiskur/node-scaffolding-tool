@@ -4,12 +4,9 @@
     {
       "type": "node",
       "request": "attach",
-      "name": "Attach to Remote",
-      "address": "localhost",
-      "port": 5858,
-      "localRoot": "${workspaceFolder}/src",
-      "remoteRoot": "/usr/src/app/src",
-      "sourceMaps": true
+      "name": "Docker: Attach to Node",
+      "remoteRoot": "/usr/src/app",
+      "port": 5858
     }
   ]
 }

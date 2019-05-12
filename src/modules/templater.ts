@@ -20,6 +20,7 @@ export interface PluginSettings {
   options?: Question[];
   processors?: Record<string, PluginProcessor>[];
   filesToProcess?: string[];
+  doNotProcess?: string[];
 }
 
 const templateIgnorePatterns: RegExp[] = [new RegExp(/^(\\|\/)?plugins/, "i"), new RegExp(/template.json/, "i")];
@@ -85,8 +86,16 @@ export class Templater {
       const pluginName = selected[i];
       const pluginPath = path.join(mappings[pluginName], pluginName);
       const pluginSettings: PluginSettings = Templater.FetchPluginSettings(pluginPath, this.projectName);
+      let ignore = _.clone(pluginIngorePatterns);
       if (pluginSettings.options) {
         const answers = await prompt(pluginSettings.options);
+
+        if (pluginSettings.doNotProcess) {
+          for (let index = 0; index < pluginSettings.doNotProcess.length; index++) {
+            const pluginFileName = pluginSettings.doNotProcess[index];
+            ignore.push(new RegExp(`${pluginName}[\\\\\\\/\\w\\d- ]*${pluginFileName}`, "i"));
+          }
+        }
         let pluginFiles = this.scanFiles(pluginPath);
         const copiedFiles = this.processPluginFiles(pluginPath, answers, pluginSettings.processors);
         pluginFiles = _.difference(pluginFiles, copiedFiles);
@@ -101,7 +110,7 @@ export class Templater {
               this.mergeConfigurations(newFilePath, JSON.parse(fs.readFileSync(file, "utf8")));
               break;
             default:
-              if (!this.test(file, pluginIngorePatterns)) {
+              if (!this.test(file, ignore)) {
                 const relativeFile = file.replace(pluginPath, "");
                 const newFilePath = path.join(this.projectPath, relativeFile);
                 Templater.forceCopyFileSync(file, newFilePath);

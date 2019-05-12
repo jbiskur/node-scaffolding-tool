@@ -1,0 +1,5 @@
+{
+  "name": "graphql",
+  "options": [],
+  "doNotProcess": ["example.ts"]
+}

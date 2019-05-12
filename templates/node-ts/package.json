@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "node --inspect=0.0.0.0:5858 --inspect-brk --nolazy -r ts-node/register ./src/index.ts",
+    "start": "node --inspect=0.0.0.0:5858 --require ts-node/register --require tsconfig-paths/register src/index.ts",
     "dev": "nodemon",
     "build": "tsc"
   },
@@ -36,7 +36,8 @@
     "@types/node": "^11.13.6",
     "nodemon": "^1.18.11",
     "ts-node": "^8.1.0",
-    "typescript": "^3.4.4"
+    "typescript": "^3.4.4",
+    "tsconfig-paths": "^3.8.0"
   },
   "dependencies": {
     "lodash": "^4.17.11"
